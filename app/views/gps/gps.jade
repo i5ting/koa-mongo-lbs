@@ -1,0 +1,14 @@
+- var _action = gps._action == 'edit' ? '#' : '/gps/'
+- var _method = gps._action == 'edit' ? ""  : "post"
+- var _type   = gps._action == 'edit' ? "button"  : "submit"
+- var onClick  = gps._action == 'edit' ?  "click_edit('gps-" + gps._action + "-form','/gps/" + gps._id + "/')" : ""
+form(id='gps-#{ gps._action}-form',action="#{_action}", method="#{_method}",role='form')
+  each n in ['gps.name','gps.location']
+    - m = eval(n);
+    div(class="field")
+      label #{n.split('.')[1]} #{m}
+      br
+      input(type='text',name="#{n.split('.')[1]}" ,value="#{ m == undefined ? '' : m }")
+        
+  div(class="actions") 
+    input(type='#{_type}',value='Submit',onClick='#{onClick}')

@@ -1,0 +1,27 @@
+extends ../layouts/layout
+
+block content
+  h1 Listing gps
+
+  table
+    thead
+      tr
+        each n in ['name','location']
+          th #{n}
+        th(colspan="3")
+    tbody
+      each gps in gps
+        tr
+          each n in ['gps.name','gps.location']
+            td #{ eval(n) }
+          td 
+            a(href='/gps/#{ gps._id}') Show
+          td 
+            a(href='/gps/#{ gps._id}/edit') Edit
+          td 
+            a(onclick="click_del('/gps/#{ gps._id}/')") Delete
+
+  br
+
+  p 
+    a(href='/gps/new') New Gps

@@ -1,0 +1,11 @@
+extends ../layouts/layout
+
+block content
+  h1 Editing gps
+
+  include gps
+
+  a(href='/gps/#{ gps._id}') Show
+  span |
+  a(href='/gps') Back
+
