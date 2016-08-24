@@ -3,7 +3,7 @@
 - var _type   = location._action == 'edit' ? "button"  : "submit"
 - var onClick  = location._action == 'edit' ?  "click_edit('location-" + location._action + "-form','/locations/" + location._id + "/')" : ""
 form(id='location-#{ location._action}-form',action="#{_action}", method="#{_method}",role='form')
-  each n in ['location.name','location.location']
+  each n in ['location.name','location.coordinates']
     - m = eval(n);
     div(class="field")
       label #{n.split('.')[1]} #{m}

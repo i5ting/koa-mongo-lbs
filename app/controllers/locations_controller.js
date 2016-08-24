@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Created by Moajs on August 24th 2016, 7:39:16 pm.
+ * Created by Moajs on August 24th 2016, 7:41:54 pm.
  */
  
 var $models = require('mount-models')(__dirname);
@@ -67,8 +67,13 @@ exports.edit = (ctx, next) => {
 exports.create = (ctx, next) => {
   console.log(ctx.method + ' /locations => create, query: ' + JSON.stringify(ctx.query) +
     ', params: ' + JSON.stringify(ctx.params) + ', body: ' + JSON.stringify(ctx.request.body));
-
-  return Location.createAsync({name: ctx.request.body.name,location: ctx.request.body.location}).then( location => {
+  
+  var coordinates = []
+    
+  coordinates.push(ctx.request.body.longitude)
+  coordinates.push(ctx.request.body.latitude)
+  
+  return Location.createAsync({name: ctx.request.body.name,coordinates: coordinates}).then( location => {
     console.log(location);
     return ctx.render('locations/show', {
       location : location
@@ -84,7 +89,7 @@ exports.update = (ctx, next) => {
 
     var id = ctx.params.id;
 
-    return Location.updateById(id,{name: ctx.request.body.name,location: ctx.request.body.location}).then( location => {
+    return Location.updateById(id,{name: ctx.request.body.name,coordinates: ctx.request.body.coordinates}).then( location => {
       console.log(location);
 
       return ctx.body = ({
@@ -144,9 +149,13 @@ exports.api = {
     });
   },
   create: (ctx, next) => {
-    var location_id = ctx.api_location._id;
-
-    return Location.createAsync({name: ctx.request.body.name,location: ctx.request.body.location}).then(location=> {
+    // var location_id = ctx.api_location._id;
+    var coordinates = []
+    
+    coordinates.push(ctx.request.body.longitude)
+    coordinates.push(ctx.request.body.latitude)
+    
+    return Location.createAsync({name: ctx.request.body.name,coordinates: coordinates}).then(location=> {
       return ctx.body = ({
         location : location
       })
@@ -158,7 +167,7 @@ exports.api = {
   update: (ctx, next) => {
     var location_id = ctx.api_location._id;
     var id = ctx.params.location_id;
-    return Location.updateByIdAsync(id, {name: ctx.request.body.name,location: ctx.request.body.location}).then(location=> {
+    return Location.updateByIdAsync(id, {name: ctx.request.body.name,coordinates: ctx.request.body.coordinates}).then(location=> {
       return ctx.api({
         location : location,
         redirect : '/locations/' + id

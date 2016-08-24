@@ -6,13 +6,13 @@ block content
   table
     thead
       tr
-        each n in ['name','location']
+        each n in ['name','coordinates']
           th #{n}
         th(colspan="3")
     tbody
       each location in locations
         tr
-          each n in ['location.name','location.location']
+          each n in ['location.name','location.coordinates']
             td #{ eval(n) }
           td 
             a(href='/locations/#{ location._id}') Show
